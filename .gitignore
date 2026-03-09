@@ -1,3 +1,6 @@
+# Temporary files
+temp-project/
+
 # Backend
 backend/finance-api/target/
 backend/finance-api/.mvn/
