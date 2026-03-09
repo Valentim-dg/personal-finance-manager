@@ -1,0 +1,16 @@
+# Backend
+backend/finance-api/target/
+backend/finance-api/.mvn/
+backend/finance-api/data/
+backend/finance-api/*.mv.db
+backend/finance-api/*.trace.db
+
+# Frontend
+frontend/finance-app/node_modules/
+frontend/finance-app/build/
+frontend/finance-app/.env
+
+# IDEs
+.idea/
+.vscode/
+*.iml
