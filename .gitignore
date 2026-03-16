@@ -8,6 +8,8 @@ backend/finance-api/data/
 backend/finance-api/*.mv.db
 backend/finance-api/*.trace.db
 
+data
+
 # Frontend
 frontend/finance-app/node_modules/
 frontend/finance-app/build/
