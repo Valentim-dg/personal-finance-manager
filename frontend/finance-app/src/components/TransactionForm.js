@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function TransactionForm(props) {
@@ -6,6 +6,20 @@ function TransactionForm(props) {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
+
+  const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryId] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/categories")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, [props.categoryRefreshKey]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +29,7 @@ function TransactionForm(props) {
       amount: parseFloat(amount),
       date: date,
       type: type,
+      category: categoryId ? { id: parseInt(categoryId) } : null,
     };
 
     axios
@@ -24,6 +39,7 @@ function TransactionForm(props) {
         setAmount("");
         setDate("");
         setType("");
+        setCategoryId("");
         props.onTransactionAdded();
       })
       .catch((error) => {
@@ -86,6 +102,22 @@ function TransactionForm(props) {
             <option value="EXPENSE">Expense</option>
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">Category:</label>
+        <select
+          value={categoryId}
+          onChange={(e) => setCategoryId(e.target.value)}
+          className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">None</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <button
