@@ -1,13 +1,5 @@
 package com.valentim.finance_api.service;
 
-import com.valentim.finance_api.dto.BalanceDTO;
-import com.valentim.finance_api.dto.CategorySummaryDTO;
-import com.valentim.finance_api.model.Transaction;
-import com.valentim.finance_api.model.Transaction.TransactionType;
-import com.valentim.finance_api.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.valentim.finance_api.dto.BalanceDTO;
+import com.valentim.finance_api.dto.CategorySummaryDTO;
+import com.valentim.finance_api.model.Transaction;
+import com.valentim.finance_api.model.Transaction.TransactionType;
+import com.valentim.finance_api.repository.TransactionRepository;
 
 @Service
 public class TransactionService {
@@ -109,5 +110,9 @@ public class TransactionService {
 
         return result;
     }
+
+    public List<Transaction> filterByCategoryId(Long categoryId) {
+    return repository.findByCategoryId(categoryId);
+}
 
 }
