@@ -1,5 +1,20 @@
 package com.valentim.finance_api.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.valentim.finance_api.dto.BalanceDTO;
 import com.valentim.finance_api.dto.CategorySummaryDTO;
 import com.valentim.finance_api.model.Transaction;
@@ -7,13 +22,6 @@ import com.valentim.finance_api.model.Transaction.TransactionType;
 import com.valentim.finance_api.service.TransactionService;
 
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -57,9 +65,10 @@ public class TransactionController {
 
     @GetMapping("/filter")
     public ResponseEntity<List<Transaction>> filter(
-            @RequestParam(required = false) TransactionType type,
-            @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate) {
+        @RequestParam(required = false) TransactionType type,
+        @RequestParam(required = false) LocalDate startDate,
+        @RequestParam(required = false) LocalDate endDate,
+        @RequestParam(required = false) Long categoryId) {
 
         if (type != null) {
             List<Transaction> result = service.filterByType(type);
@@ -70,6 +79,11 @@ public class TransactionController {
             List<Transaction> result = service.filterByDateBetween(startDate, endDate);
             return ResponseEntity.ok(result);
         }
+
+        if (categoryId != null) {
+        List<Transaction> result = service.filterByCategoryId(categoryId);
+        return ResponseEntity.ok(result);
+    }
 
         return ResponseEntity.ok(service.getAll());
     }
