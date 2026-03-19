@@ -3,6 +3,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Toast from "./Toast";
 import ConfirmModal from "./ConfirmModal";
+import TransactionFilters from "./TransactionFilters";
 
 function TransactionList(props) {
   const [transactions, setTransactions] = useState([]);
@@ -11,17 +12,39 @@ function TransactionList(props) {
     isOpen: false,
     transactionId: null,
   });
+  const [filters, setFilters] = useState({
+    type: "",
+    startDate: "",
+    endDate: "",
+    category: "",
+  });
 
   useEffect(() => {
+    let url = "http://localhost:8080/api/transactions";
+    const params = new URLSearchParams();
+
+    if (filters.type) params.append("type", filters.type);
+    if (filters.startDate) params.append("startDate", filters.startDate);
+    if (filters.endDate) params.append("endDate", filters.endDate);
+    if (filters.category) params.append("categoryId", filters.category);
+
+    if (params.toString()) {
+      url = `http://localhost:8080/api/transactions/filter?${params.toString()}`;
+    }
+
     axios
-      .get("http://localhost:8080/api/transactions")
+      .get(url)
       .then((response) => {
         setTransactions(response.data);
       })
       .catch((error) => {
         console.error("Error fetching transactions:", error);
       });
-  }, [props.refreshKey]);
+  }, [props.refreshKey, filters]);
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   const showToast = (message, type) => {
     setToast({ message, type });
@@ -71,6 +94,7 @@ function TransactionList(props) {
       />
 
       <h2 className="text-2xl font-bold mb-4">Transactions</h2>
+      <TransactionFilters onFilterChange={handleFilterChange} />
       <table className="w-full bg-white rounded-lg shadow">
         <thead className="bg-gray-100">
           <tr>
