@@ -48,12 +48,7 @@ function TransactionForm(props) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow mb-6"
-    >
-      <h2 className="text-2xl font-bold mb-4">New Transaction</h2>
-
+    <form onSubmit={handleSubmit}>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1">Description:</label>
