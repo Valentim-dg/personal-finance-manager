@@ -22,6 +22,10 @@ function App() {
     setCategoryRefreshKey((oldKey) => oldKey + 1);
   };
 
+  const handleCategoryDeleted = () => {
+    setCategoryRefreshKey((oldKey) => oldKey + 1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
@@ -75,7 +79,10 @@ function App() {
               </h2>
               <CategoryForm onCategoryAdded={handleCategoryAdded} />
               <div className="mt-6">
-                <CategoryList refreshKey={categoryRefreshKey} />
+                <CategoryList
+                  refreshKey={categoryRefreshKey}
+                  onCategoryDeleted={handleCategoryDeleted}
+                />
               </div>
             </div>
           </div>
@@ -88,6 +95,7 @@ function App() {
               <TransactionList
                 refreshKey={refreshKey}
                 onTransactionDeleted={handleTransactionDeleted}
+                categoryRefreshKey={categoryRefreshKey}
               />
             </div>
           </div>
