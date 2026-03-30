@@ -14,7 +14,7 @@ function CategoryList(props) {
 
   const showToast = (message, type) => {
     setToast({ message, type });
-    setTimeout(() => setToast(null), 4000); // Remove após 4 segundos
+    setTimeout(() => setToast(null), 4000);
   };
 
   useEffect(() => {
@@ -41,6 +41,7 @@ function CategoryList(props) {
       .then(() => {
         setCategories(categories.filter((c) => c.id !== id));
         showToast("Category deleted successfully!", "success");
+        props.onCategoryDeleted();
       })
       .catch((error) => {
         console.error("Error deleting category:", error);
