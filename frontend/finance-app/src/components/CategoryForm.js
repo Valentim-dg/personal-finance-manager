@@ -26,7 +26,7 @@ function CategoryForm(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-2">
       <div>
         <label className="block text-sm font-medium mb-1 text-gray-700">
           Name
@@ -56,9 +56,9 @@ function CategoryForm(props) {
 
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-indigo-500 to-indigo-600 text-white p-2 rounded-lg hover:from-indigo-600 hover:to-indigo-700 transition font-medium shadow-md"
+        className="mt-4 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
       >
-        ➕ Add Category
+        Add Category
       </button>
     </form>
   );
