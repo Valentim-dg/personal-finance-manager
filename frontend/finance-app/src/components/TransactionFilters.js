@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function TransactionFilters({ onFilterChange }) {
+function TransactionFilters({ onFilterChange, categoryRefreshKey }) {
   const [type, setType] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -17,7 +17,7 @@ function TransactionFilters({ onFilterChange }) {
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-  }, []);
+  }, [categoryRefreshKey]);
 
   const handleFilter = () => {
     onFilterChange({ type, startDate, endDate, category });
