@@ -6,7 +6,6 @@ function TransactionForm(props) {
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
-
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
 
@@ -66,11 +65,21 @@ function TransactionForm(props) {
           <input
             type="number"
             step="0.01"
+            min="0.01"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            onKeyDown={(e) => {
+              if (["e", "E", "+", "-"].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="0.00"
             required
           />
+          <p className="text-xs text-gray-500 mt-1">
+            Must be greater than zero
+          </p>
         </div>
 
         <div>
@@ -79,9 +88,13 @@ function TransactionForm(props) {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
+            max={new Date().toISOString().split("T")[0]}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+          <p className="text-xs text-gray-500 mt-1">
+            Must be today or earlier
+          </p>{" "}
         </div>
 
         <div>
