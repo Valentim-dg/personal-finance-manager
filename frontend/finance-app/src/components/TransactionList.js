@@ -64,6 +64,7 @@ function TransactionList(props) {
       .then(() => {
         setTransactions(transactions.filter((t) => t.id !== id));
         showToast("Transaction deleted successfully!", "success");
+        props.onTransactionDeleted();
       })
       .catch((error) => {
         console.error("Error deleting transaction:", error);
@@ -76,7 +77,7 @@ function TransactionList(props) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div>
       {toast && (
         <Toast
           message={toast.message}
@@ -94,7 +95,10 @@ function TransactionList(props) {
       />
 
       <h2 className="text-2xl font-bold mb-4">Transactions</h2>
-      <TransactionFilters onFilterChange={handleFilterChange} />
+      <TransactionFilters
+        onFilterChange={handleFilterChange}
+        categoryRefreshKey={props.categoryRefreshKey}
+      />
       <table className="w-full bg-white rounded-lg shadow">
         <thead className="bg-gray-100">
           <tr>
